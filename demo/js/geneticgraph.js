@@ -1,6 +1,6 @@
 const config = {
   container_id: "graph",
-  server_url: "bolt://localhost:7687",
+  server_url: "bolt://18.117.88.210:7687",
   server_user: "neo4j",
   server_password: "neo4jneo4j", // user , user only have read access! So safe to put it here
   labels: {
@@ -15,27 +15,25 @@ const config = {
       thickness: "value",
       caption: false,
     },
-
-
   },
   initial_cypher: `MATCH p=(s1:Strain)-[r:DISTANCE]->(s2:Strain) RETURN *`,
 };
 
 var driver = neo4j.driver(
-  "bolt://localhost:7687",
+  "bolt://18.117.88.210:7687",
   neo4j.auth.basic("neo4j", "neo4jneo4j")
 );
 
 function draw(name, subType, relationType, value) {
   const strainName = name === "All" ? "" : `{name:'${name}'}`;
- /// const relation = relationType == 1 ? "SEQUENCE_SIMILARITY" : "DISTANCE";
+  /// const relation = relationType == 1 ? "SEQUENCE_SIMILARITY" : "DISTANCE";
   ///const relation = relationType == "1" ? "SEQUENCE_SIMILARITY" :(relationType=="0" ? "DISTANCE":"HI_TITER_VALUE");
-  const relation = relationType == "1" ? "" :"GENETIC_DISTANCE";
+  const relation = relationType == "1" ? "" : "GENETIC_DISTANCE";
   //const operatorString = operator == 1 ? "<=" : ">=";
- // const operatorString = "=";
+  // const operatorString = "=";
   const operatorQuery =
     //value === "" ? "" : `r.value ${operatorString} ${value}`;
-      value === "" ? "" : `${value}`;
+    value === "" ? "" : `${value}`;
   ///
   const subTypeString =
     subType === "All"
@@ -44,9 +42,9 @@ function draw(name, subType, relationType, value) {
   const whereCause =
     subTypeString !== "" || operatorQuery !== ""
       ? ` LIMIT${subTypeString} ${operatorQuery}`
-      :  ``;
+      : ``;
   const cipher = `MATCH p=(s1:Strain${strainName})-[r:${relation}]->(s2:Strain) RETURN p ORDER BY r.value ${whereCause} `;
-//WHERE ${subTypeString} ${operatorQuery}
+  //WHERE ${subTypeString} ${operatorQuery}
   console.log(cipher);
   graph.renderWithCypher(cipher);
 }

@@ -5,7 +5,7 @@ from neo4j import GraphDatabase
 from difflib import SequenceMatcher
 
 # database setting
-uri = 'bolt://localhost:7687'
+uri = 'bolt://18.117.88.210:7687'
 username = 'neo4j'
 password = 'Password123$'
 password = "neo4jneo4j"

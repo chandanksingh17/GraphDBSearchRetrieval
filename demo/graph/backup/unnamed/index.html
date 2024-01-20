@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FluAntigen</title>
+    <link
+      rel="stylesheet"
+      href="../fontawesome/css/fontawesome.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../fontawesome/css/all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../fontawesome/css/fontawesome.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../css/select2.min.css"
+    />
+    <style type="text/css">
+      html,
+      body {
+        font-family: sans-serif;
+        font-size: 16px;
+      }
+      .row .col-12 {
+        padding: 5px;
+      }
+      .row .col-12 label{
+        color: white;
+      }
+      .back_button_box a{
+        margin: 10px;
+        position: fixed;
+        z-index: 10;
+        text-align: center;
+        font-size: 40px;
+        color: black;
+      }
+      .filter_box_wrapper{
+        width: 320px;
+        position: fixed;
+        right: 10px;
+        bottom: 10px;
+        z-index: 9;
+      }
+      .toggle_button_wrapper{
+        text-align:right;
+        font-size: 25px;
+      }
+      .toggle_button{
+        font-size: 30px;
+        color: black;
+      }
+      .filter_box{
+        background: rgba(0,0,0,0.6);
+        padding: 20px;
+        border-radius: 10px;
+        width: 100%;
+      }
+      #graph {
+        width: 100%;
+        height: 100vh;
+
+        font: 22pt arial;
+        position: relative;
+      }
+      #loading {
+        top: 0;
+        left: 0;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.7);
+        z-index: 11;
+      }
+      #loading img {
+        margin-top: -35px;
+        margin-left: -35px;
+        top: 50%;
+        left: 50%;
+        width: 70px;
+        height: 70px;
+        position: absolute;
+      }
+      .btn {
+        width: 100%;
+      }
+      .select2-selection__rendered {
+          line-height: 31px !important;
+      }
+      .select2-container .select2-selection--single {
+          height: 35px !important;
+      }
+      .select2-selection__arrow {
+          height: 34px !important;
+      }
+      .hide {
+        display:none;
+      }
+      #rStudioHeader .rStudio {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 25px;
+    font-weight: 200;
+    color: #808080;
+}
+      #rStudioHeader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 100;
+    background-color: rgba(255,255,255,0.98);
+    -webkit-box-shadow: 0 3px 15px 0px rgb(0 0 0 / 10%);
+    transition-property: left;
+    transition-duration: 0.25s;
+}
+.band {
+    position: relative;
+    padding: 0 5%;
+}
+
+
+
+#rStudioHeader .rStudio {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 25px;
+    font-weight: 200;
+    color: #808080;
+}
+
+#rStudioHeader .productName {
+    font-family: "Source Code Pro", monospace;
+    font-weight: normal;
+    font-size: 40px;
+    color: inherit;
+    white-space: nowrap;
+    -webkit-transition-property: font-size;
+    -moz-transition-property: font-size;
+    -o-transition-property: font-size;
+    transition-property: font-size;
+    -webkit-transition-duration: 0.25s;
+    -moz-transition-duration: 0.25s;
+    -o-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+}
+
+
+
+#rStudioHeader #menu {
+    text-align: right;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 50px;
+    white-space: nowrap;
+}
+
+#rStudioHeader #menu .menuItem {
+    display: inline;
+    padding: 0px 15px;
+    cursor: pointer;
+    border-radius: 3px;
+    color: inherit;
+    -webkit-transition-property: background-color;
+    -moz-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
+    -webkit-transition-duration: 0.25s;
+    -moz-transition-duration: 0.25s;
+    -o-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+}
+
+.shrinkHeader #rStudioHeader .innards {
+    padding: 9px 0;
+}
+#rStudioHeader .innards {
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    display: -ms-flexbox;
+    -ms-flex-pack: justify;
+    display: -webkit-box;
+    display: -webkit-flex;
+    -webkit-justify-content: space-between;
+    align-items: flex-end;
+    -webkit-transition-property: padding;
+    -moz-transition-property: padding;
+    -o-transition-property: padding;
+    transition-property: padding;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+}
+.main {
+    padding-top: 100px;
+    padding-bottom: 0px;
+}
+.rStudio {
+    display: inline-block;
+    margin-top: 5px;
+    margin-left: 3px;
+}
+.rStudio .rStudioLogo {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    background-image: url(../../log/uf.png);
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+}
+#rStudioFooter.band {
+    background-color: #75aadb;
+    color: #fff;
+    padding: 30px 5%;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 25px;
+}
+#rStudioFooter {
+    position: relative;
+    z-index: 12;
+    box-sizing: border-box;
+    height: 92px;
+}
+#rStudioFooter .bandContent {
+    display: flex;
+    justify-content: space-between;
+    display: -ms-flexbox;
+    -ms-flex-pack: justify;
+    display: -webkit-box;
+    display: -webkit-flex;
+    -webkit-justify-content: space-between;
+    align-items: center;
+    line-height: 20px;
+}
+.bandContent {
+    margin: 0 auto;
+    max-width: 1200px;
+}
+#rStudioFooter .bandContent #copyright {
+    flex-shrink: 5;
+    color: #e3eef8;
+}
+
+#rStudioFooter .bandContent #logos {
+    flex-shrink: 1;
+}
+
+#rStudioFooter .bandContent #logos .footerLogo {
+    display: inline-block;
+    height: 25px;
+    width: 25px;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: center center;
+    margin: 0 8px;
+}
+#rStudioFooter .bandContent #logos .footerLogo.twitter {
+    background-image: url(../../log/twitterLogo.svg);
+}
+#rStudioFooter .bandContent #logos .footerLogo.gitHub {
+    background-image: url(../../log/gitHubLogo.svg);
+}
+#rStudioFooter .bandContent #logos .footerLogo.linkedIn {
+    background-image: url(../../log/linkedInLogo.svg);
+
+}#rStudioFooter .bandContent #logos .footerLogo.facebook {
+    background-image: url(../../log/facebookLogo.svg);
+}
+
+
+    </style>
+    <link
+      rel="stylesheet"
+      href="../css/bootstrap.min.css"
+    />
+
+    <script src="../js/neovis.js"></script>
+  </head>
+  <body>
+     <div id="rStudioHeader">
+      <div class="band">
+        <div class="innards bandContent">
+          <div>
+            <a class="productName" href="#">FluAntigen</a>
+            <div class="rStudio">
+              <span>from </span>
+              <a href="https://www.ufl.edu/">
+                <div class="rStudioLogo"></div>
+              </a>
+            </div>
+          </div>
+          <div id="menu">
+            <div id="menuItems" class="showMenu">
+              <a  class="menuItem"  href="#">Home</a>
+              <a  class="menuItem"  href="../database/index.html">Database</a>
+              <a  class="menuItem"  href="../graph/index.html">Antigenic Network</a>
+              <a  class="menuItem"  href="../prediction/index.html">Prediction</a>
+              <a  class="menuItem"  href="../instruction/index.html">Instruction</a>
+              <a  class="menuItem"  href="../contact/index.html">Description</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="main">
+      <div class="container">
+        </div>
+        <div class="filter_box_wrapper">
+          <div class="toggle_button_wrapper">
+            <a href="#" class="toggle_button">
+              <i class="far fa-times-circle"></i>
+            </a>
+          </div>
+          <div class="filter_box">
+            <div class="row">
+              <div class="col-12">
+                <label>Name:</label>
+                <select class="form-control" id="name">
+                </select>
+              </div>
+              <!--<div class="col-12">
+                <label>Region:</label>
+                <select class="form-control" id="region">
+                </select>
+              </div>-->
+              <div class="col-12">
+                <label>Subtype:</label>
+                <select class="form-control" id="subType">
+                  <option>All</option>
+                  <option>H1N1</option>
+                  <option>H5N1</option>
+                  <option>H3N2</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label>Relation:</label>
+                <select class="form-control" id="relationType">
+                  <option value="0">Genetic Distance</option>
+                </select>
+              </div>
+
+              <div class="col-12">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="option value"
+                  id="optionValue"
+                />
+              </div>
+              <div class="col-12">
+                <button class="btn btn-danger" type="button" onclick="clearFilter()">
+                  Clear
+                </button>
+              </div>
+              <div class="col-12">
+                <button class="btn btn-primary" type="button" onclick="filter()">
+                  Filter
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <div class="row">
+          <div class="col-md-12" id="graph" ></div>
+        </div>
+        <div id="loading">
+          <img
+            src="../loading.gif"
+          />
+        </div>
+      </div>
+
+
+
+   <div id="rStudioFooter" class="band">
+      <div class="bandContent">
+        <div id="copyright">© Copyright xxxxxxxxx.</div>
+        <div id="logos">
+          <a href="https://twitter.com/" class="footerLogo twitter"></a>
+          <a href="https://github.com/" class="footerLogo gitHub"></a>
+          <a href="https://www.linkedin.com/" class="footerLogo linkedIn"></a>
+          <a href="https://www.facebook.com/" class="footerLogo facebook"></a>
+        </div>
+      </div>
+    </div>
+
+
+
+  </body>
+  <script src="../js/jquery-3.5.0.min.js" type="text/javascript"></script>
+  <script src="../js/select2.min.js" type="text/javascript"></script>
+  <script src="../js/neo4j-web.js" type="text/javascript"></script>
+  <script src="../js/graph.js" type="text/javascript"></script>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FluAntigen</title>
+    <meta charset="utf-8" />
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+      integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+      crossorigin="anonymous"
+    />
+    <style>
+      .margin-auto {
+        margin: 0 auto;
+      }
+      .flex-container {
+        display: flex;
+        margin: 5;
+        max-width: 600px;
+        padding: 5;
+      }
+      .flex-container > div {
+        flex: 1;
+        margin: 5;
+      }
+      .flex-container input,
+      .flex-container textarea {
+        width: 100%;
+      }
+      textarea {
+        height: 200px;
+      }
+      #container {
+        flex-direction: column;
+      }
+      .heading {
+        background-color: #e9ecef;
+      }
+      .form-pair {
+        position: relative;
+      }
+      .result-icon {
+        position: absolute;
+        right: -50px;
+        font-size: 35px;
+        top: 90px;
+        color: #28a745;
+      }
+      .result-icon.cross {
+        color: #dc3545;
+      }
+      .info-icon {
+        font-size: 35px;
+        color: #28a745;
+      }
+      .info-icon.cross {
+        color: #dc3545;
+      }
+      .result-info p {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .flex-reverse {
+        flex-direction: row-reverse;
+      }
+      .flex-reverse input {
+        width: auto;
+      }
+      .separator {
+        max-width: 5px;
+      }
+      .hide {
+        display: none;
+      }
+      .col-md-12 img {
+        width: 100%;
+        height: auto;
+        border: 1px solid gray;
+        max-width: 600px;
+        margin: 0 auto;
+        display: block;
+        margin-top: 20px;
+      }
+      a i {
+        font-size: 100px;
+        display: block !important;
+        color: black;
+        margin-bottom: 10px;
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="./">FluAntigen</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div
+          class="collapse navbar-collapse justify-content-between"
+          id="navbarSupportedContent"
+        >
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="./">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./database/index.html/">Database</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./graph/index.html"
+                >Antigenic Network</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./prediction/index.html">Prediction</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./instruction/index.html"
+                >Instruction</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./contact/index.html"
+                >Submission & Contact</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="main">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+            <br />
+            <h1>Download Antigenic Data Sets</h1>
+            <p>
+              The following data set are the data source of this whole website.
+              You may feel free to download the data by clicking the icon
+              buttons below.
+            </p>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+        <hr />
+        <br />
+        <br />
+        <div class="row">
+          <div class="col-md-4 text-center">
+            <a href="./data/H1N1_antigenicData" download
+              ><i class="far fa-file-alt"></i>H1N1_antigenicData</a
+            >
+          </div>
+          <div class="col-md-4 text-center">
+            <a href="./data/H3N2_antigenicData" download
+              ><i class="far fa-file-alt"></i>H3N2_antigenicData</a
+            >
+          </div>
+          <div class="col-md-4 text-center">
+            <a href="./data/H5N1_antigenicData" download
+              ><i class="far fa-file-alt"></i>H5N1_antigenicData</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <br />
+      <br />
+    </div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <div class="hide">
+      <div id="error_msg">
+        <div
+          class="alert alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>Error!</strong> Please check the input below make sure values
+          are correct.
+          <button
+            type="button"
+            class="close"
+            data-dismiss="alert"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+      <div id="success_msg">
+        <div
+          class="alert alert-success alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>Success!</strong> Please check the result below.
+          <button
+            type="button"
+            class="close"
+            data-dismiss="alert"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

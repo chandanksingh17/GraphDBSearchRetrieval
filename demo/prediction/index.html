@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FluAntigen</title>
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+    />
+    <style>
+      .margin-auto {
+        margin: 0 auto;
+      }
+      .flex-container {
+        display: flex;
+        margin: 5;
+        max-width: 600px;
+        padding: 5;
+      }
+      .flex-container > div {
+        flex: 1;
+        margin: 5;
+      }
+      .flex-container input,
+      .flex-container textarea {
+        width: 100%;
+      }
+      textarea {
+        height: 200px;
+      }
+      #container {
+        flex-direction: column;
+      }
+      .heading {
+        background-color: #e9ecef;
+      }
+      .form-pair {
+        position: relative;
+      }
+      .result-icon {
+        position: absolute;
+        right: -70px;
+        font-size: 35px;
+        top: 50px;
+        color: #28a745;
+      }
+      .result-icon.cross {
+        color: #dc3545;
+      }
+      .info-icon {
+        font-size: 35px;
+        color: #28a745;
+      }
+      .info-icon.cross {
+        color: #dc3545;
+      }
+      .result-info p {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .flex-reverse {
+        flex-direction: row-reverse;
+      }
+      .flex-reverse input {
+        width: auto;
+      }
+      .separator {
+        max-width: 5px;
+      }
+      .hide {
+        display: none;
+      }
+      /* Display success_msg and error_msg inline */
+      #success_msg,
+      #error_msg {
+        display: inline-block;
+        margin-left: 10px; /* Adjust the margin as needed */
+      }
+
+      /* Hide success_msg and error_msg by default */
+      #success_msg,
+      #error_msg {
+        display: none;
+      }
+
+      /* Show success_msg and error_msg when the show class is applied */
+      .show {
+        display: block !important; /* Override the default 'display: none' */
+      }
+      #rStudioHeader .rStudio {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 25px;
+    font-weight: 200;
+    color: #808080;
+}
+      #rStudioHeader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 100;
+    background-color: rgba(255,255,255,0.98);
+    -webkit-box-shadow: 0 3px 15px 0px rgb(0 0 0 / 10%);
+    transition-property: left;
+    transition-duration: 0.25s;
+}
+.band {
+    position: relative;
+    padding: 0 5%;
+}
+
+#rStudioHeader .rStudio {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 25px;
+    font-weight: 200;
+    color: #808080;
+}
+
+#rStudioHeader .productName {
+    font-family: "Source Code Pro", monospace;
+    font-weight: normal;
+    font-size: 40px;
+    color: inherit;
+    white-space: nowrap;
+    -webkit-transition-property: font-size;
+    -moz-transition-property: font-size;
+    -o-transition-property: font-size;
+    transition-property: font-size;
+    -webkit-transition-duration: 0.25s;
+    -moz-transition-duration: 0.25s;
+    -o-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+}
+
+
+
+#rStudioHeader #menu {
+    text-align: center;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 50px;
+    white-space: nowrap;
+}
+
+#rStudioHeader #menu .menuItem {
+    display: inline;
+    padding: 0px 15px;
+    cursor: pointer;
+    border-radius: 3px;
+    color: inherit;
+    -webkit-transition-property: background-color;
+    -moz-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
+    -webkit-transition-duration: 0.25s;
+    -moz-transition-duration: 0.25s;
+    -o-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+}
+
+.shrinkHeader #rStudioHeader .innards {
+    padding: 9px 0;
+}
+#rStudioHeader .innards {
+    padding: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    display: -ms-flexbox;
+    -ms-flex-pack: justify;
+    display: -webkit-box;
+    display: -webkit-flex;
+    -webkit-justify-content: space-between;
+
+    -webkit-transition-property: padding;
+    -moz-transition-property: padding;
+    -o-transition-property: padding;
+    transition-property: padding;
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+}
+.main {
+    padding-top: 100px;
+    padding-bottom: 0px;
+}
+.rStudio {
+    display: inline-block;
+    margin-top: 5px;
+    margin-left: 3px;
+}
+.rStudio .rStudioLogo {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    background-image: url(../../log/uf.png);
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+}
+#rStudioFooter.band {
+    background-color: #75aadb;
+    color: #fff;
+    padding: 30px 5%;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 25px;
+}
+#rStudioFooter {
+    position: relative;
+    z-index: 12;
+    box-sizing: border-box;
+    height: 92px;
+}
+#rStudioFooter .bandContent {
+    display: flex;
+    justify-content: space-between;
+    display: -ms-flexbox;
+    -ms-flex-pack: justify;
+    display: -webkit-box;
+    display: -webkit-flex;
+    -webkit-justify-content: space-between;
+    align-items: center;
+    line-height: 20px;
+}
+.bandContent {
+    margin: 0 auto;
+    max-width: 1200px;
+}
+#rStudioFooter .bandContent #copyright {
+    flex-shrink: 5;
+    color: #e3eef8;
+}
+
+#rStudioFooter .bandContent #logos {
+    flex-shrink: 1;
+}
+
+#rStudioFooter .bandContent #logos .footerLogo {
+    display: inline-block;
+    height: 25px;
+    width: 25px;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: center center;
+    margin: 0 8px;
+}
+#rStudioFooter .bandContent #logos .footerLogo.twitter {
+    background-image: url(../../log/twitterLogo.svg);
+}
+#rStudioFooter .bandContent #logos .footerLogo.gitHub {
+    background-image: url(../../log/gitHubLogo.svg);
+}
+#rStudioFooter .bandContent #logos .footerLogo.linkedIn {
+    background-image: url(../../log/linkedInLogo.svg);
+
+}#rStudioFooter .bandContent #logos .footerLogo.facebook {
+   background-image: url(../../log/facebookLogo.svg);
+ }
+.dropbtn {
+  background-color: white;
+  color: black;
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+}
+
+/* 容器 <div> - 需要定位下拉内容 */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* 下拉内容（默认隐藏）*/
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* 下拉列表中的链接 */
+.dropdown-content a {
+  color: black;
+
+  text-decoration: none;
+  display: block;
+  align-content: center;
+}
+
+/* 更改悬停时下拉链接的颜色 */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* 悬停时显示下拉菜单 */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
+
+
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script>
+      function setLoading(loading) {
+        if (loading) {
+          $("#submit-button").attr("value", "loading...");
+          $("#submit-button").addClass("disabled");
+        } else {
+          $("#submit-button").attr("value", "Predict");
+          $("#submit-button").removeClass("disabled");
+        }
+      }
+
+      $(document).ready(function () {
+        var errorMsg = $("#error_msg").html();
+        var successMsg = $("#success_msg").html();
+        const row = $("#container").html();
+        $(document).on("click", ".close-icon", function () {
+          $(this).parent().remove();
+        });
+
+        $("#add").click(function () {
+          if ($("#container .form-pair").length < 3) {
+            $("#container").append(row);
+          } else {
+            alert("The limit is only 3 pairs at a time.");
+          }
+        });
+
+        $("#remove").click(function () {
+          if ($("#container .form-pair").length > 1)
+            $("#container .form-pair").last().remove();
+        });
+
+        $("#load-sample").click(function () {
+          $("#container").html(row);
+          let sub_type = $("#sub_type").val();
+          if (sub_type == "H1N1") {
+            $("input[name=strains1]").val("A/NEW_JERSEY/8/1976/H1N1");
+            $("input[name=strains2]").val("A/BAYERN/69/2009/H1N1");
+            $("textarea[name=seqs1]").val(
+              "DTLCIGYHANNSTDTVDTVLEKNVTVTHSVNLLEDRHNGKLCKLGGIAPLHLGKCNIAGWLLGNPECELLLTVSSWSYIVETSNSDNGTCYPGDFINYEELREQLSSVSSFERFEIFPKTSSWPDHETNXGVTAACPYAGANSFYRNLIWLVKKGNSYPKLSKSYVNNKGKEVLVLWGIHHPPTSTDQQSLYQNADAYVFVGSSKYNRKFKPEIAARPKVRGQAGRMNYYWTLIEPGDTITFEATGNLVVPRYAFAMNRGSGSGIIISDAPVHDCNTKCQTPKGAINTSLPFQNIHPVTIGECPKYVKSTKLRMATGLRNIPSIQSR"
+            );
+            $("textarea[name=seqs2]").val(
+              "DTLCIGYHANNSTDTVDTVLEKNVTVTHSVNLLEDKHNGKLCKLRGVAPLHLGKCNIAGWILGNPECESLSTASSWSYIVETSSSDNGTCYPGDFIDYEELREQLSSVSSFERFEIFPKTSSWPNHDSNKGVTAACPHAGAKSFYKNLIWLVKKENSYPKLSKSYINDKGKEVLVLWGIHHPSTSADQQSLYQNADAYVFVGSSRYSKKFKPEIAIRPKVRDQEGRMNYYWTLVEPGDKITFEATGNLVVPRYAFAMERNAGSGIIISDTPVHDCNTTCQTPKGAINTSLPFQNIHPITIGKCPKYVKSTKLRLATGLRNVPSIQSR"
+            );
+          } else if (sub_type == "H3N2") {
+            $("input[name=strains1]").val("A/Salamanca/9/2009/H3N2");
+            $("input[name=strains2]").val(
+              "A/HONG_KONG/4801/2014_MDCK4/MDCK1/H3N2"
+            );
+            $("textarea[name=seqs1]").val(
+              "QKLPGNDNSTATLCLGHHAVPNGTIVKTITNDQIEVTNATELVQSSSTGEICDSPHQILDGENCTLIDALLGDPQCDGFQNKKWDLFVERSKAYSNCYPYDVPDYASLRSLVASSGTLEFNNESFNWTGVTQNGTSSACIRRSNNSFFSRLNWLTHLKFKYPALNVTMPNNEQFDKLYIWGVHHPGTDNDQIFLYAQASGRITVSTKRSQQTVIPNIGSRPRVRNIPSRISIYWTIVKPGDILLINSTGNLIAPRGYFKIRSGKSSIMRSDAPIGKCNSECITPNGSIPNDKPFQNVNRITYGACPRYVKQNTLKLATGMRNVPEKQTR"
+            );
+            $("textarea[name=seqs2]").val(
+              "QKIPGNDNSTATLCLGHHAVPNGTIVKTITNDRIEVTNATELVQNSSIGEICDSPHQILDGENCTLIDALLGDPQCDGFQNKKWDLFVERSKAYSNCYPYDVPDYASLRSLVATSGTLEFNNESFNWTGVTQNGTSSACIRRSSSSFFSRLNWLTHLNYTYPALNVTMPNNEQFDKLYIWGVHHPGTDKDQIFLYAQSSGRITVSTKRSQQAVIPNIGSRPRIRDIPSRISIYWTIVKPGDILLINSTGNLIAPRGYFKIRSGKSSIMRSDAPIGKCKSECITPNGSIPNDKPFQNVNRITYGACPRYVKHSTLKLATGMRNVPEKQTR"
+            );
+          } else if (sub_type == "H5N1") {
+            $("input[name=strains1]").val(
+              "A/TURKEY/TURKEY/1/2005_NIBRG-23/H5N1"
+            );
+            $("input[name=strains2]").val("A/ANHUI/1/2005_(ANH/1)/H5N1");
+            $("textarea[name=seqs1]").val(
+              "DQICIGYHANNSTEQVDTIMEKNVTVTHAQDILEKTHNGKLCDLDGVKPLILRDCSVAGWLLGNPMCDEFLNVPEWSYIVEKINPANDLCYPGNFNDYEELKHLLSRINHFEKIQIIPKSSWSDHEASAGVSSACPYQGRSSFFRNVVWLIKKDNAYPTIKRSYNNTNQEDLLVLWGIHHPNDAAEQTRLYQNPTTYISVGTSTLNQRLVPKIATRSKVNGQSGRMEFFWTILKPNDAINFESNGNFIAPENAYKIVKKGDSTIMKSELEYGNCNTKCQTPIGAINSSMPFHNIHPLTIGECPKYVKSSRLVLATGLRNS"
+            );
+            $("textarea[name=seqs2]").val(
+              "DQICIGYHANNSTEQVDTIMEKNVTVTHAQDILEKTHNGKLCDLDGVKPLILRDCSVAGWLLGNPMCDEFINVPEWSYIVEKANPANDLCYPGNFNDYEELKHLLSRINHFEKIQIIPKSSWSDHEASSGVSSTCPYQGTPSFFRNVVWLIKKNNTYPTIKRSYNNTNQEDLLILWGIHHSNDAAEQTKLYQNPTTYISVGTSTLNQRLVPKIATKSKVNGQSGKMDFFWTILKPNDAINFESNGNFIAPEYAYKIVKKGDSAIVKSEVEYGNCNTKCQTPIGAINSSMPFHNIHPLTIGECPKYVKSNKLVLATGLRNS"
+            );
+          }
+        });
+
+        $("#sub_type").change(function () {
+          $("#container").html(row);
+        });
+
+        $("#prediction-form").submit(function (e) {
+          e.preventDefault();
+
+          setLoading(true);
+          // $(".result-info").hide();
+          // Create an FormData object
+          const strains1 = [];
+          const strains2 = [];
+          const seqs1 = [];
+          const seqs2 = [];
+          $("input[name=strains1]").each(function () {
+            strains1.push($(this).val());
+          });
+          $("input[name=strains2]").each(function () {
+            strains2.push($(this).val());
+          });
+          $("textarea[name=seqs1]").each(function () {
+            seqs1.push($(this).val());
+          });
+          $("textarea[name=seqs2]").each(function () {
+            seqs2.push($(this).val());
+          });
+
+          const data = {
+            strains1: strains1,
+            strains2: strains2,
+            seqs1: seqs1,
+            seqs2: seqs2,
+          };
+          console.log(data);
+          $(".result-icon").addClass("hide");
+          $.ajax({
+            url: $(this).attr("action") + $("#sub_type").val() + "/",
+            type: "post",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (result, status, xhr) {
+              console.log(result, status);
+              setLoading(false);
+              // $(".result-info").show();
+              $("#msg-box").html(successMsg);
+              result.forEach(function (each, index) {
+                const key = Object.keys(each)[0];
+                const result = each[key];
+                console.log(result);
+                if (result) {
+                  $(`.result-icon.check:eq(${index})`).removeClass("hide");
+                } else {
+                  $(`.result-icon.cross:eq(${index})`).removeClass("hide");
+                }
+              });
+            },
+            error: function (xhr, status, error) {
+              console.log("error", error);
+              setLoading(false);
+              $("#msg-box").html(errorMsg);
+            },
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+
+    <div id="rStudioHeader">
+      <div class="band">
+        <div class="innards bandContent">
+          <div>
+            <a class="productName" href="../index.html">FluAntigen</a>
+            <div class="rStudio">
+              <span>from </span>
+              <a href="https://www.ufl.edu/">
+                <div class="rStudioLogo"></div>
+              </a>
+            </div>
+          </div>
+
+
+          <div id="menu">
+            <div id="menuItems" class="showMenu">
+              <a  class="menuItem"  href="../index.html">Home</a>
+              <a  class="menuItem"  href="../database/index.html">Database</a>
+              <div  class="dropdown"  href="../graph/index.html">
+                <button class="dropbtn" >Data Visualization</button>
+                <div class="dropdown-content">
+                  <a href="../graph/index.html">Antigenic Network</a>
+                  <a href="../geneticgraph/index.html" >Genetic Network</a>
+                  <a href="../analysis/index.html" >Data Analysis</a>
+                </div>
+              </div>
+              <a  class="menuItem"  href="../prediction/index.html">Prediction</a>
+              <a  class="menuItem"  href="../instruction/index.html">Instruction</a>
+              <a  class="menuItem"  href="../contact/index.html">Contact</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <div class="main">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+            <br />
+            <h1>IAV-CNN</h1>
+            <p>
+              A convolutional neural network model to predict antigenic variants
+              of influenza A virus.
+            </p>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+        <hr />
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card card-body bg-light text-center">
+              <br />
+              <p>
+                Fill up the form below to predict antigenic variants.<br />
+                You can click "Add" to add more rows and click 'Load Sample' to
+                load sample data.
+              </p>
+              <div class="result-info">
+                <p>
+                  <span class="info-icon check"
+                    ><i class="fas fa-check-circle"></i
+                  ></span>
+                  &nbsp;indicates that the strain pair is distinct
+                </p>
+                <p>
+                  <span class="info-icon cross"
+                    ><i class="fas fa-times-circle"></i
+                  ></span>
+                  &nbsp;indicates that the strain pair is not distinct
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- /.col-lg-12 -->
+        </div>
+        <br />
+        <div id="msg-box"></div>
+        <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+            <form
+              action="http://localhost:8888/predict_by_type/"
+              method="post"
+              enctype="multipart/form-data"
+              id="prediction-form"
+            >
+              <div class="flex-container select-box margin-auto">
+                <select class="form-control" id="sub_type">
+                  <option>H1N1</option>
+                  <option>H3N2</option>
+                  <option>H5N1</option>
+                </select>
+              </div>
+              <br />
+              <div id="container" class="flex-container margin-auto">
+                <div class="flex-container form-pair">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      name="strains1"
+                      class="form-control"
+                      placeholder="Please provide the strain name"
+                      required
+                    />
+                    <textarea
+                      name="seqs1"
+                      class="form-control"
+                      placeholder="Please provide the HA1 protein sequence"
+                      required
+                    ></textarea>
+                  </div>
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      name="strains2"
+                      class="form-control"
+                      placeholder="Please provide the strain name"
+                      required
+                    />
+                    <textarea
+                      name="seqs2"
+                      class="form-control"
+                      placeholder="Please provide the HA1 protein sequence"
+                      required
+                    ></textarea>
+                  </div>
+                  <div class="result-icon check hide">
+                    <i class="fas fa-check-circle"></i>
+                  </div>
+                  <div class="result-icon cross hide">
+                    <i class="fas fa-times-circle"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-container margin-auto">
+                <div class="flex-container flex-start">
+                  <button type="button" class="btn btn-danger" id="remove">
+                    Remove
+                  </button>
+                  <div class="separator">&nbsp;</div>
+                  <button type="button" class="btn btn-success" id="add">
+                    Add
+                  </button>
+                  <div class="separator">&nbsp;</div>
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    id="load-sample"
+                  >
+                    Load Sample
+                  </button>
+                </div>
+                <div class="flex-container flex-reverse">
+                  <input
+                    type="submit"
+                    class="btn btn-primary"
+                    id="submit-button"
+                    value="Predict"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+      </div>
+      <br />
+      <br />
+    </div>
+
+    <div id="rStudioFooter" class="band">
+      <div class="bandContent">
+        <div id="copyright">© Copyright xxxxxxxxx.</div>
+        <div id="logos">
+          <a href="https://twitter.com/" class="footerLogo twitter"></a>
+          <a href="https://github.com/" class="footerLogo gitHub"></a>
+          <a href="https://www.linkedin.com/" class="footerLogo linkedIn"></a>
+          <a href="https://www.facebook.com/" class="footerLogo facebook"></a>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <div class="hide">
+      <div id="error_msg">
+        <div
+          class="alert alert-danger alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>Error!</strong> Please check the input below make sure values
+          are correct.
+          <button
+            type="button"
+            class="close"
+            data-dismiss="alert"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+      <div id="success_msg">
+        <div
+          class="alert alert-success alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>Success!</strong> Please check the result below.
+          <button
+            type="button"
+            class="close"
+            data-dismiss="alert"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -194,7 +194,11 @@ if __name__ == "__main__":
     #     session.run('CREATE INDEX FOR (s:Strain) ON (s.id)')
     # else:
     #     print("Index already exists.")
-    session.run('CREATE INDEX FOR (s:Strain) ON (s.id)')
+    try:
+        session.run('CREATE INDEX FOR (s:Strain) ON (s.id)')
+    except:
+        print("No index index_7dd86d4")
+    
     for key in strain_objs:
         strain = strain_objs.get(key)
         session.execute_write(add_strains, strain, key)

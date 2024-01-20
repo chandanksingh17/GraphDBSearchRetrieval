@@ -176,23 +176,21 @@ if __name__ == "__main__":
     driver = GraphDatabase.driver(uri, auth=(username, password))
     session = driver.session()
     session.run('MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n,r')
-    
+    # Drop the index if it exists
+    session.run('DROP INDEX index_7dd86d4')
     # Check if the index already exists
-    result = session.run("SHOW INDEXES")
-    #existing_index = None
+    # result = session.run("SHOW INDEXES")
+    # existing_index = None
 
-    for record in result:
-        if 'indexName' in record and record['indexName'] == 'index_7dd86d4':
-            # Drop the index if it exists
-            session.run('DROP INDEX index_7dd86d4')
-            #existing_index = record
+    # for record in result:
+    #     if 'indexName' in record and record['indexName'] == 'index_7dd86d4':
+    #         existing_index = record
 
     # if not existing_index:
     #     # The index does not exist, so create it
     #     session.run('CREATE INDEX FOR (s:Strain) ON (s.id)')
     # else:
     #     print("Index already exists.")
-
     session.run('CREATE INDEX FOR (s:Strain) ON (s.id)')
     for key in strain_objs:
         strain = strain_objs.get(key)

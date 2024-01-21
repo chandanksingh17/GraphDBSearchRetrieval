@@ -176,6 +176,9 @@ graph.render();
 $(document).ready(function () {
   loadRegions();
   loadStrains();
+  setTimeout(function () {
+    filter();
+  }, 2000);
 });
 
 $(".toggle_button").click(function () {

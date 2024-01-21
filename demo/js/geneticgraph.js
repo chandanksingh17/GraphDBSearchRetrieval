@@ -1,6 +1,6 @@
 const config = {
   container_id: "graph",
-  server_url: "bolt://18.117.88.210:7687",
+  server_url: "bolt://localhost:7687",
   server_user: "neo4j",
   server_password: "neo4jneo4j", // user , user only have read access! So safe to put it here
   labels: {
@@ -15,25 +15,27 @@ const config = {
       thickness: "value",
       caption: false,
     },
+
+
   },
   initial_cypher: `MATCH p=(s1:Strain)-[r:DISTANCE]->(s2:Strain) RETURN *`,
 };
 
 var driver = neo4j.driver(
-  "bolt://18.117.88.210:7687",
+  "bolt://localhost:7687",
   neo4j.auth.basic("neo4j", "neo4jneo4j")
 );
 
 function draw(name, subType, relationType, value) {
   const strainName = name === "All" ? "" : `{name:'${name}'}`;
-  /// const relation = relationType == 1 ? "SEQUENCE_SIMILARITY" : "DISTANCE";
+ /// const relation = relationType == 1 ? "SEQUENCE_SIMILARITY" : "DISTANCE";
   ///const relation = relationType == "1" ? "SEQUENCE_SIMILARITY" :(relationType=="0" ? "DISTANCE":"HI_TITER_VALUE");
-  const relation = relationType == "1" ? "" : "GENETIC_DISTANCE";
+  const relation = relationType == "1" ? "" :"GENETIC_DISTANCE";
   //const operatorString = operator == 1 ? "<=" : ">=";
-  // const operatorString = "=";
+ // const operatorString = "=";
   const operatorQuery =
     //value === "" ? "" : `r.value ${operatorString} ${value}`;
-    value === "" ? "" : `${value}`;
+      value === "" ? "" : `${value}`;
   ///
   const subTypeString =
     subType === "All"
@@ -42,9 +44,10 @@ function draw(name, subType, relationType, value) {
   const whereCause =
     subTypeString !== "" || operatorQuery !== ""
       ? ` LIMIT${subTypeString} ${operatorQuery}`
-      : ``;
+      :  `LIMIT 1500`;
   const cipher = `MATCH p=(s1:Strain${strainName})-[r:${relation}]->(s2:Strain) RETURN p ORDER BY r.value ${whereCause} `;
-  //WHERE ${subTypeString} ${operatorQuery}
+  //const cipher = `MATCH p=()-[r:GENETIC_DISTANCE]->() RETURN p LIMIT 25`;
+//WHERE ${subTypeString} ${operatorQuery}
   console.log(cipher);
   graph.renderWithCypher(cipher);
 }
@@ -88,7 +91,7 @@ function loadRegions() {
   let session = driver.session();
   let readTxResultPromise = session.readTransaction((txc) => {
     return txc.run(
-      "MATCH p=(s1:Strain)-[]-(s2:Strain) WHERE EXISTS(s1.region) RETURN DISTINCT s1.region LIMIT 1500;"
+      "MATCH p=(s1:Strain)-[]-(s2:Strain) WHERE s1.region IS NOT NULL RETURN DISTINCT s1.region LIMIT 1500;"
     );
   });
 

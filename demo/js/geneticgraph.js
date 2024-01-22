@@ -142,7 +142,7 @@ $(document).ready(function () {
   loadStrains();
   setTimeout(function () {
     filter();
-  }, 2000);
+  }, 3000);
 });
 
 $(".toggle_button").click(function () {

@@ -58,7 +58,8 @@ function filter() {
   const relationType = document.getElementById("relationType").value;
   const optionValue = document.getElementById("optionValue").value;
   //const operator = document.getElementById("operator").value;
-  const name = document.getElementById("name").value;
+  let name = document.getElementById("name").value;
+  if (name == "") { name = "All" }
   //draw(name, subType, relationType, optionValue, operator);
   draw(name, subType, relationType, optionValue);
 }
@@ -141,8 +142,8 @@ $(document).ready(function () {
   loadRegions();
   loadStrains();
   setTimeout(function () {
-    $("#filter_button").click();
-  }, 3000);
+   filter();
+  }, 2000);
 });
 
 $(".toggle_button").click(function () {

@@ -66,7 +66,8 @@ function filter() {
   const relationType = document.getElementById("relationType").value;
   const optionValue = document.getElementById("optionValue").value;
   const operator = document.getElementById("operator").value;
-  const name = document.getElementById("name").value;
+  let name = document.getElementById("name").value;
+  if (name == "") { name = "All"; }
   draw(name, subType, relationType, optionValue, operator);
 }
 
@@ -178,7 +179,7 @@ $(document).ready(function () {
   loadStrains();
   setTimeout(function () {
     filter();
-  }, 3000);
+  }, 2000);
 });
 
 $(".toggle_button").click(function () {

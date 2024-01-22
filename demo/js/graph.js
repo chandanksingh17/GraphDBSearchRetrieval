@@ -1,6 +1,6 @@
 const config = {
   container_id: "graph",
-  server_url: "bolt://localhost:7687",
+  server_url: "bolt://18.117.88.210:7687",
   server_user: "neo4j",
   server_password: "neo4jneo4j", // user , user only have read access! So safe to put it here
   labels: {
@@ -33,7 +33,7 @@ const config = {
 };
 
 var driver = neo4j.driver(
-  "bolt://localhost:7687",
+  "bolt://18.117.88.210:7687",
   neo4j.auth.basic("neo4j", "neo4jneo4j")
 );
 

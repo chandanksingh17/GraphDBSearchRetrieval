@@ -141,8 +141,8 @@ $(document).ready(function () {
   loadRegions();
   loadStrains();
   setTimeout(function () {
-    filter();
-  }, 3000);
+    $("#filter_button").click();
+  }, 2000);
 });
 
 $(".toggle_button").click(function () {
